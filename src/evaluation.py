@@ -7,7 +7,7 @@ from pyspark.mllib.evaluation import MulticlassMetrics
 
 def evaluate_model(model_pipeline, test_data: DataFrame, label_col="label"):
     """
-    Evaluates the given model pipeline on test data and prints key metrics.
+    Evaluates the given model pipeline on test data and returns key metrics.
 
     Args:
         model_pipeline: Trained PySpark PipelineModel.
@@ -15,7 +15,7 @@ def evaluate_model(model_pipeline, test_data: DataFrame, label_col="label"):
         label_col (str): Name of the label column.
 
     Returns:
-        None
+        dict: Dictionary containing evaluation metrics.
     """
     # Generate predictions
     predictions = model_pipeline.transform(test_data)
@@ -43,4 +43,10 @@ def evaluate_model(model_pipeline, test_data: DataFrame, label_col="label"):
     print("Confusion Matrix:")
     print(metrics.confusionMatrix())
 
-
+    # Return metrics as a dictionary
+    return {
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1_score": f1_score
+    }

@@ -163,3 +163,40 @@ def plot_nb_informative_words(train_df):
     plt.title("Naive Bayes: Positive Words")
     plt.tight_layout()
     plt.show()
+
+
+def plot_model_comparison(results):
+    """
+    Plots a bar chart comparing the accuracy of different trained models.
+
+    Args:
+        results (dict): A dictionary with model names as keys and a dict containing
+                        'metrics' (accuracy, precision, recall, f1_score) as values.
+
+                        Example:
+                        {
+                            'Logistic Regression': {
+                                'accuracy': 0.85,
+                                'precision': 0.84,
+                                ...
+                            },
+                            ...
+                        }
+
+    Returns:
+        None. Displays a matplotlib bar chart.
+    """
+    model_names = []
+    accuracies = []
+
+    for model_name, metrics in results.items():
+        model_names.append(model_name)
+        accuracies.append(metrics.get("accuracy", 0.0))
+
+    plt.figure(figsize=(8, 5))
+    plt.bar(model_names, accuracies)
+    plt.ylabel("Accuracy")
+    plt.title("Model Accuracy Comparison")
+    plt.ylim(0, 1)
+    plt.tight_layout()
+    plt.show()
